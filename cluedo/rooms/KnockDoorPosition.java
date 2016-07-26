@@ -5,7 +5,7 @@ import cluedo.game.Position;
 public class KnockDoorPosition {
 	private Position p;
 
-	public KnockDoorPosition(Position p){
+	public KnockDoorPosition(Position p) {
 		this.p = p;
 	}
 
@@ -16,4 +16,10 @@ public class KnockDoorPosition {
 	public void setP(Position p) {
 		this.p = p;
 	}
+
+	@Override
+	public String toString() {
+		return "KnockDoorPosition [p=" + p + "]";
+	}
+
 }

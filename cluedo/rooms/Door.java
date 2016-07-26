@@ -26,4 +26,10 @@ public class Door {
 	public void setKp(KnockDoorPosition kp) {
 		this.kp = kp;
 	}
+
+	@Override
+	public String toString() {
+		return "Door [p=" + p + ", kp=" + kp + "]";
+	}
+	
 }

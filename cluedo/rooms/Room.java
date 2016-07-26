@@ -1,6 +1,6 @@
 package cluedo.rooms;
 
-import cluedo.cards.Card;
+// mard interface
+public interface Room {
 
-public abstract class Room implements Card{
 }

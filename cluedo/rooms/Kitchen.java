@@ -1,6 +1,6 @@
 package cluedo.rooms;
 
-public class Kitchen {
+public class Kitchen implements Room{
 	private Stair s;
 	private Door d;
 
@@ -25,4 +25,10 @@ public class Kitchen {
 	public void setD(Door d) {
 		this.d = d;
 	}
+
+	@Override
+	public String toString() {
+		return "Kitchen [s=" + s + ", d=" + d + "]";
+	}
+	
 }

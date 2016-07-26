@@ -7,28 +7,42 @@ import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+import cluedo.rooms.BallRoom;
+import cluedo.rooms.BilliardRoom;
 import cluedo.rooms.Conservatory;
+import cluedo.rooms.DiningRoom;
 import cluedo.rooms.Door;
+import cluedo.rooms.Hall;
 import cluedo.rooms.Kitchen;
 import cluedo.rooms.KnockDoorPosition;
+import cluedo.rooms.Library;
 import cluedo.rooms.Lounge;
+import cluedo.rooms.Room;
 import cluedo.rooms.Stair;
 import cluedo.rooms.Study;
 
 public class Board {
 	private static final int BOARD_WIDTH = 25;
 	private static final int BOARD_HEIGHT = 24;
+	public static ArrayList<Room> allRooms = new ArrayList<>();
+	public static ArrayList<Position> startPoints = new ArrayList<>();
 	private Character board[][] = new Character[BOARD_WIDTH][BOARD_HEIGHT];
 
 	public Board(String map) throws IOException {
 		setUpBoard(map);
 		displayBoard(board);
-		// setup stairs
+		// setup stairs, done
 		setUpRoom(board);
-		// setup doors
-		// setup rooms
-		// setup start points
+		// setup doors,done
+		// setup rooms,done
+		// setup start points,done
 		setUpStartPoint(board);
+		// for (Room r : allRooms) {
+		// System.out.println(r.toString());
+		// }
+//		for (Position p : startPoints) {
+//			System.out.println(p.toString());
+//		}
 
 	}
 
@@ -38,8 +52,13 @@ public class Board {
 	 * @param board2
 	 */
 	private void setUpStartPoint(Character[][] board2) {
-		// TODO Auto-generated method stub
-
+		for (int i = 0; i < board2.length; i++) {
+			for (int j = 0; j < board2[0].length; j++) {
+				if (board2[i][j] == 'S') {
+					startPoints.add(new Position(i, j));
+				}
+			}
+		}
 	}
 
 	/**
@@ -48,6 +67,13 @@ public class Board {
 	 * @param board2
 	 */
 	private void setUpRoom(Character[][] board2) {
+		// doors detail per each room
+		ArrayList<Door> bDoors = new ArrayList<>();
+		ArrayList<Door> dDoors = new ArrayList<>();
+		ArrayList<Door> iDoors = new ArrayList<>();
+		ArrayList<Door> lDoors = new ArrayList<>();
+		ArrayList<Door> hDoors = new ArrayList<>();
+		// stairs
 		Stair s1 = null, s2 = null, s3 = null, s4 = null;
 		for (int i = 0; i < board2.length; i++) {
 			for (int j = 0; j < board2[0].length; j++) {
@@ -77,34 +103,89 @@ public class Board {
 					if (type == 'k') {
 						Kitchen kitchen = new Kitchen(s1,
 								new Door(new Position(i, j), new KnockDoorPosition(new Position(i + 1, j))));
-						// System.out.println(
-						// kitchen.getD().getP().toString() + " " +
-						// kitchen.getD().getKp().getP().toString());
+						allRooms.add(kitchen);
 					}
 					// setup conservatory room
 					else if (type == 'c') {
 						Conservatory con = new Conservatory(s2,
 								new Door(new Position(i, j), new KnockDoorPosition(new Position(i + 1, j))));
+						allRooms.add(con);
 					}
 					// setup Lounge
 					else if (type == 'o') {
 						Lounge lou = new Lounge(s3,
 								new Door(new Position(i, j), new KnockDoorPosition(new Position(i - 1, j))));
+						allRooms.add(lou);
 					}
 					// setup study room
 					else if (type == 's') {
 						Study study = new Study(s4,
 								new Door(new Position(i, j), new KnockDoorPosition(new Position(i - 1, j))));
+						allRooms.add(study);
 					} else if (type == 'b') {
 						// identify the knock position , search aound + and find
-						// the empty spot and return
-						// case to a door
-						// add to the list
-						// structure the room
+						Position p = findKnockPosition(i, j);
+						Door door = new Door(new Position(i, j), new KnockDoorPosition(p));
+						bDoors.add(door);
+					} else if (type == 'd') {
+						Position p = this.findKnockPosition(i, j);
+						Door door = new Door(new Position(i, j), new KnockDoorPosition(p));
+						dDoors.add(door);
+					} else if (type == 'i') {
+						Position p = this.findKnockPosition(i, j);
+						Door door = new Door(new Position(i, j), new KnockDoorPosition(p));
+						iDoors.add(door);
+					} else if (type == 'l') {
+						Position p = this.findKnockPosition(i, j);
+						Door door = new Door(new Position(i, j), new KnockDoorPosition(p));
+						lDoors.add(door);
+					} else if (type == 'h') {
+						Position p = this.findKnockPosition(i, j);
+						Door door = new Door(new Position(i, j), new KnockDoorPosition(p));
+						hDoors.add(door);
 					}
 				}
 			}
 		}
+		// Structure rooms
+		BallRoom ballroom = new BallRoom(bDoors);
+		allRooms.add(ballroom);
+		DiningRoom diningroom = new DiningRoom(dDoors);
+		allRooms.add(diningroom);
+		BilliardRoom billiardroom = new BilliardRoom(iDoors);
+		allRooms.add(billiardroom);
+		Library library = new Library(lDoors);
+		allRooms.add(library);
+		Hall hall = new Hall(hDoors);
+		allRooms.add(hall);
+
+	}
+
+	/**
+	 * find the knock door position for multi-doors room
+	 * 
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+	private Position findKnockPosition(int x, int y) {
+		for (int i = 0; i < board.length; i++) {
+			for (int j = 0; j < board[0].length; j++) {
+				if (board[x][y + 1] == ' ') {
+					return new Position(x, y + 1);
+				}
+				if (board[x][y - 1] == ' ') {
+					return new Position(x, y - 1);
+				}
+				if (board[x + 1][y] == ' ') {
+					return new Position(x + 1, y);
+				}
+				if (board[x - 1][y] == ' ') {
+					return new Position(x - 1, y);
+				}
+			}
+		}
+		return null;
 	}
 
 	/**

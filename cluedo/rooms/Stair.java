@@ -27,4 +27,10 @@ public class Stair {
 	public void setC(char c) {
 		this.c = c;
 	}
+
+	@Override
+	public String toString() {
+		return "Stair [p=" + p + ", c=" + c + "]";
+	}
+	
 }

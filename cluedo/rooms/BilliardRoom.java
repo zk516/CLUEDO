@@ -2,7 +2,7 @@ package cluedo.rooms;
 
 import java.util.ArrayList;
 
-public class BilliardRoom {
+public class BilliardRoom implements Room{
 	private ArrayList<Door> doors;
 
 	// 2 doors
@@ -17,4 +17,10 @@ public class BilliardRoom {
 	public void setDoors(ArrayList<Door> doors) {
 		this.doors = doors;
 	}
+
+	@Override
+	public String toString() {
+		return "BilliardRoom [doors=" + doors + "]";
+	}
+	
 }

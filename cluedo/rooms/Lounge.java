@@ -1,6 +1,6 @@
 package cluedo.rooms;
 
-public class Lounge {
+public class Lounge implements Room{
 	//mark as l on map
 	private Stair s;
 	private Door d;
@@ -25,4 +25,10 @@ public class Lounge {
 	public void setD(Door d) {
 		this.d = d;
 	}
+
+	@Override
+	public String toString() {
+		return "Lounge [s=" + s + ", d=" + d + "]";
+	}
+	
 }

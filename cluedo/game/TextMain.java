@@ -2,6 +2,12 @@ package cluedo.game;
 
 import java.io.IOException;
 
+/**
+ * Game engine spark(main program to active the game)
+ * this class should support screen output and take users input to execute 
+ * @author rongjiwang
+ *
+ */
 public class TextMain {
 
 	public static void main(String[] args) throws IOException {
@@ -16,7 +22,7 @@ public class TextMain {
 		// System.out.println(args[0].toString());
 		Board b = new Board(args[0]);
 		// Dice d = new Dice();
-		System.out.println(new Dice().throwDice());
+		// System.out.println(new Dice().throwDice());
 		// setup room.stair
 		// Game game = new Game(players, board);
 	}

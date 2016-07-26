@@ -1,11 +1,11 @@
 package cluedo.rooms;
 
-public class Study {
+public class Study implements Room {
 	private Stair s;
 	private Door d;
 
-	//mark as s on map
-	public Study(Stair s, Door d){
+	// mark as s on map
+	public Study(Stair s, Door d) {
 		this.s = s;
 		this.d = d;
 	}
@@ -25,4 +25,10 @@ public class Study {
 	public void setD(Door d) {
 		this.d = d;
 	}
+
+	@Override
+	public String toString() {
+		return "Study [s=" + s + ", d=" + d + "]";
+	}
+
 }
