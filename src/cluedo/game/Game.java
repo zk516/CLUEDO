@@ -17,5 +17,9 @@ public class Game {
 		this.b = b;
 		this.playernumber = playernumber;
 	}
+	
+	public Board getBoard(){
+		return b;
+	}
 
 }
