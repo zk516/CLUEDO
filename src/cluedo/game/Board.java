@@ -26,7 +26,7 @@ public class Board {
 	private static final int BOARD_HEIGHT = 24;
 	public static ArrayList<Room> allRooms = new ArrayList<>();
 	public static ArrayList<Position> startPoints = new ArrayList<>();
-	private Character board[][] = new Character[BOARD_WIDTH][BOARD_HEIGHT];
+	public static Character board[][] = new Character[BOARD_WIDTH][BOARD_HEIGHT];
 
 	public Board(String map) throws IOException {
 		setUpBoard(map);
@@ -48,7 +48,7 @@ public class Board {
 
 	/**
 	 * fixd position for character
-	 * 
+	 *
 	 * @param board2
 	 */
 	private void setUpStartPoint(Character[][] board2) {
@@ -63,7 +63,7 @@ public class Board {
 
 	/**
 	 * set up stairs with position class
-	 * 
+	 *
 	 * @param board2
 	 */
 	private void setUpRoom(Character[][] board2) {
@@ -163,7 +163,7 @@ public class Board {
 
 	/**
 	 * find the knock door position for multi-doors room
-	 * 
+	 *
 	 * @param x
 	 * @param y
 	 * @return
@@ -190,7 +190,7 @@ public class Board {
 
 	/**
 	 * check the door belongs which room
-	 * 
+	 *
 	 * @param i
 	 * @param j
 	 * @return
@@ -213,10 +213,10 @@ public class Board {
 
 	/**
 	 * Draw the board on the screen
-	 * 
+	 *
 	 * @param board2
 	 */
-	private void displayBoard(Character[][] board2) {
+	public void displayBoard(Character[][] board2) {
 		for (int i = 0; i < board2.length; i++) {
 			for (int j = 0; j < board2[0].length; j++) {
 				System.out.print(board2[i][j]);
@@ -227,7 +227,7 @@ public class Board {
 
 	/**
 	 * Set up the board
-	 * 
+	 *
 	 * @param map
 	 * @throws IOException
 	 */
@@ -258,4 +258,5 @@ public class Board {
 			System.out.println("Failed setup Board" + e);
 		}
 	}
+
 }

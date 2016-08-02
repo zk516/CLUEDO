@@ -10,7 +10,7 @@ import cluedo.game.*;
 import cluedo.rooms.*;
 /**
  * Game engine spark(main program to active the game)
- * this class should support screen output and take users input to execute 
+ * this class should support screen output and take users input to execute
  * @author rongjiwang
  *
  */
@@ -36,7 +36,7 @@ public class TextMain {
 
 		//Give each character a fixed position
 		//Should this be in the board class?
-		HashMap<Character,Position> hm = new HashMap();
+		HashMap<Character,Position> hm = new HashMap<Character, Position>();
 		try{
 			hm.put(Character.COLONEL_MUSTARD, Board.startPoints.get(0));
 			hm.put(Character.MISS_SCARLETT, Board.startPoints.get(1));
@@ -55,12 +55,50 @@ public class TextMain {
 		//input player info
 		int numOfPlayers = inputNumber("How many players?");
 		ArrayList<Player> players = inputPlayers(numOfPlayers);
-		
-		//System.out.println("Please enter a number(1~9)");
-		//System.out.println("1: ");
-		Scanner sc = new Scanner(System.in);
-		int i = sc.nextInt();
 
+		//set position for the given players
+		for(Player p: players){
+			if(hm.containsKey(p.getCharacter())){
+				p.setPosition(hm.get(p.getCharacter()));
+
+			}
+		}
+
+		//change the board for the given players
+		for(Player p: players){
+			//System.out.println(p.getPosition().toString());
+			Board.board[p.getPosition().getX()][p.getPosition().getY()]=p.getSimbol();
+		}
+		//change the position of the remaining players to '-'
+		for (int i = 0; i < Board.board.length; i++) {
+			for (int j = 0; j < Board.board[0].length; j++) {
+				if(Board.board[i][j]=='S'){
+					Board.board[i][j] = '-';
+				}
+			}
+		}
+
+		//Deal cards to each player
+
+
+
+
+		//the game starts
+		int turn = 1;
+		Dice d = new Dice();
+		while (true) { // loop forever
+			System.out.println("\n********************");
+			System.out.println("***** TURN " + turn + " *******");
+			System.out.println("********************\n");
+			b.displayBoard(Board.board);
+			for(Player p: players){
+				System.out.println(p.toString());
+				int steps = d.throwDice();
+				//int steps = 3;//need to be changed
+				moveOption(steps,p,b);
+			}
+
+		}
 
 	}
 
@@ -99,9 +137,25 @@ public class TextMain {
 
 	}
 
+	private static char inputChar(String msg){
+		System.out.println(msg+" ");
+		while(true){
+			BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
+			try{
+				String c = input.readLine();
+				if(c.length()>1){
+					System.out.println("Please enter a single character!");
+				}
+				return c.charAt(0);
+			}catch(IOException e){
+				System.out.println("I/O Error ... Please try again");
+			}
+		}
+	}
+
 	private static ArrayList<Player> inputPlayers(int num){
 		ArrayList<Player> players = new ArrayList<Player>();
-		HashMap<String,Character> hm = new HashMap();
+		HashMap<String,Character> hm = new HashMap<String, Character>();
 		hm.put("sca", Character.MISS_SCARLETT);
 		hm.put("mus", Character.COLONEL_MUSTARD);
 		hm.put("pea", Character.MRS_PEACOCK);
@@ -128,10 +182,67 @@ public class TextMain {
 						+ "whi for MRS_WHITE\n"
 						+ "plu for PROFESSOR_PLUM\n"
 						+ "gre for THE_REVEREND_GREEN\n");
-			}			
+			}
+			//ask the user to get a single character to show on the board
+			char simbol = inputChar("Player #"+ i + " simbol?\n This is the simbol to show on the board.");
+			players.get(i).setSimbol(simbol);
 		}
 		return players;
 
 	}
+	private static void moveOption(int steps,Player p,Board b){
+
+		while(steps!=0){
+			System.out.println("Remaining steps: "+steps+"\n");
+			char c = inputChar("Please choose a direction!\n"
+					+ "w: up\n"
+					+ "a: left\n"
+					+ "s: down\n"
+					+ "d: right\n");
+			if(c=='w'){
+				moveUp(p);
+				b.displayBoard(Board.board);
+			}else if(c == 'a'){
+				moveLeft(p);
+				b.displayBoard(Board.board);
+			}else if(c =='s'){
+				moveDown(p);
+				b.displayBoard(Board.board);
+			}else if(c == 'd'){
+				moveRight(p);
+				b.displayBoard(Board.board);
+			}
+			steps--;
+		}
+
+
+	}
+
+
+	//For those four move method, need to add checking system.
+	private static void moveUp(Player p){
+		Board.board[p.getPosition().getX()][p.getPosition().getY()] = ' ';
+		Board.board[p.getPosition().getX()-1][p.getPosition().getY()] = p.getSimbol();
+		p.setPosition(new Position(p.getPosition().getX()-1,p.getPosition().getY()));
+	}
+
+	private static void moveLeft(Player p){
+		Board.board[p.getPosition().getX()][p.getPosition().getY()] = ' ';
+		Board.board[p.getPosition().getX()][p.getPosition().getY()-1] = p.getSimbol();
+		p.setPosition(new Position(p.getPosition().getX(),p.getPosition().getY()-1));
+	}
+
+	private static void moveDown(Player p){
+		Board.board[p.getPosition().getX()][p.getPosition().getY()] = ' ';
+		Board.board[p.getPosition().getX()+1][p.getPosition().getY()] = p.getSimbol();
+		p.setPosition(new Position(p.getPosition().getX()+1,p.getPosition().getY()));
+	}
+
+	private static void moveRight(Player p){
+		Board.board[p.getPosition().getX()][p.getPosition().getY()] = ' ';
+		Board.board[p.getPosition().getX()][p.getPosition().getY()+1] = p.getSimbol();
+		p.setPosition(new Position(p.getPosition().getX(),p.getPosition().getY()+1));
+	}
+
 
 }
