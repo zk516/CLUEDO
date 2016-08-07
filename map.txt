@@ -1,0 +1,25 @@
+---------S----S---------
+kkkkk1-   b  b   -c    c 
+k    k  bb    bb  c    c 
+k    k  b      b  c    c 
+k    k  b      b  +c   c 
+k   kk  +b    b+   ccc2-
+-kkk+k  bb    bb       S
+        b+bbbb+b       -
+-                 iiiiii
+ddddd             +i   i
+d    ddd  #####   i    i
+d      d  #   #   i   ii
+d     d+  #   #   iiii+i
+d      d  #   #        -
+d     dd  #   #   ll+ll-
+dddddd+d  #   #  l  l  l
+-         #####  +l    l
+S                l     l
+-        hh++hh   lllll-
+3ooooo+  h hh h        S
+o     o  h   h+        -
+o     o  h    h  +sssss4
+o     o  h    h  s     s
+o     o  h    h  s     s 
+oooooo-S--hhhh-- -ssssss    
