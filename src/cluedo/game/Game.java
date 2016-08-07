@@ -272,7 +272,7 @@ public class Game {
 	 * @param board2
 	 * @return
 	 */
-	private static Card findPlayerLocation(Player player, Board board2) {
+	public static Card findPlayerLocation(Player player, Board board2) {
 		char c = player.getRoomSymbol();
 		switch (c) {
 		case 'k':
@@ -560,7 +560,7 @@ public class Game {
 	 * @param board2
 	 * @return
 	 */
-	private String checkSuggestionOption(Player player, Board board2) {
+	public String checkSuggestionOption(Player player, Board board2) {
 		if (player.isArePlayerInARoom() && !player.isSuggestion()) {
 			player.setSuggestion(true);
 			return "make suggestion";
@@ -575,7 +575,7 @@ public class Game {
 	 * @param board2
 	 * @return
 	 */
-	private String checkExitRoomOption(Player player, Board board2) {
+	public String checkExitRoomOption(Player player, Board board2) {
 		if (player.isArePlayerInARoom()) {
 			return "exit room";
 		}
@@ -590,7 +590,7 @@ public class Game {
 	 * @param board2
 	 * @return
 	 */
-	private String checkStairOption(Player player, Board board2) {
+	public String checkStairOption(Player player, Board board2) {
 		// if player in the room
 		// if player in 1,2,3,4,room,
 		// then the stair can be using
@@ -610,7 +610,7 @@ public class Game {
 	 * @param board2
 	 * @return
 	 */
-	private String checkRoomOption(Player player, Board board2) {
+	public String checkRoomOption(Player player, Board board2) {
 		// return the correct room name only player standing at the knocking
 		// door position
 		for (Room r : board2.allRooms) {
